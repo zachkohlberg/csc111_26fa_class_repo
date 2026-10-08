@@ -45,23 +45,68 @@ public class EightQueens {
     // exercise, obfuscates what we're actually doing to the array, and focuses
     // too much on OOP
     public static boolean placeQueens(int[][] board, int col) {
+        // base case:
+        // col is off the board
+
+        if (col >= COLS) {
+            return true;
+        }
+
         // recursive case:
         //
         // easy problem: try each row in this column
         // smaller recursive problem: place queens in the remaining columns
+        for (int row = 0; row < ROWS; row++) {
+            if (board[row][col] == SAFE) {
+                // easy: try placing a queen
+                board[row][col] = QUEEN;
+                attack(board, row, col);
 
-        // base case:
-        // col is off the board
+                // smaller problem: try placing queens in the remaining columns
+                boolean success = placeQueens(board, col + 1);
+                
+                if (success) {
+                    // we're done! pass the word down the call stack
+                    return true;
+                } else {
+                    // order doesn't matter here, but if it does matter we usually need
+                    // to reverse the order when undoing
+                    // undo the attack
+                    unattack(board, row, col);
+                    // undo the queen placement
+                    board[row][col] = SAFE;
+                }
+            }
+        }
+
+        // we tried every column and none of them worked, so we've failed
+        return false;
     }
 
     // update board state after placing a queen
     public static void attack(int[][] board, int row, int col) {
-        // TODO
+        for (int i = 1; i < COLS - col; i++) {
+            board[row][col + i] += 1;
+            if (row + i < ROWS) {
+                board[row + i][col + i] += 1;
+            }
+            if (row - i >= 0) {
+                board[row - i][col + i] += 1;
+            }
+        }
     }
 
     // update board state after undoing a queen placement
     public static void unattack(int[][] board, int row, int col) {
-        // TODO
+        for (int i = 1; i < COLS - col; i++) {
+            board[row][col + i] -= 1;
+            if (row + i < ROWS) {
+                board[row + i][col + i] -= 1;
+            }
+            if (row - i >= 0) {
+                board[row - i][col + i] -= 1;
+            }
+        }
     }
 
     // print the board as displayed in the example image (a little overkill, but
@@ -99,7 +144,7 @@ public class EightQueens {
         System.out.print("  ");
         // column numbers
         for (int col = 0; col < COLS; col++) {
-            System.out.print(" " + col);
+            System.out.print("  " + col + " ");
         }
         // end the column header
         System.out.println();
@@ -111,7 +156,7 @@ public class EightQueens {
         // padding and first +
         String rowSeparator = "  +";
         for (int col = 0; col < COLS; col++) {
-            rowSeparator += "-+";
+            rowSeparator += "---+";
         }
 
         // first row separator for the top of the board
@@ -129,9 +174,9 @@ public class EightQueens {
                 // think we'd usually prefer to just see the queen placements,
                 // which would make a bunch of numbers or x's distracting
                 if (board[row][col] == QUEEN) {
-                    System.out.print("Q|");
+                    System.out.print(" Q |");
                 } else {
-                    System.out.print(" |");
+                    System.out.print("   |");
                 }
             }
 

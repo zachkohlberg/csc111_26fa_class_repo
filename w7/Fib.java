@@ -9,7 +9,7 @@ public class Fib {
 
         for (int n = 1; n <= count; n++) {
             long startN = System.nanoTime();
-            BigInteger fibN = fibRecBigNicer(n);
+            BigInteger fibN = fibRec2BigNicer(n);
             long endN = System.nanoTime();
             System.out.printf("fib(%d) = %d (took %d ns)\n", n, fibN, endN - startN);
         }
@@ -134,5 +134,23 @@ public class Fib {
     // - use BigInteger for N in the 90s and higher
     // - demonstrate overflow with fast version
     // - could compare speed of long and BigInteger
+
+    // kinda janky version of what I had in mind last class
+    // 
+    // instead of returinng fib(n), this function returns an array
+    // containing fib(n-1) and fib(n)
+    public static BigInteger[] fibRec2Big(int n) {
+        if (n <= 2) {
+            return new BigInteger[] { BigInteger.ONE, BigInteger.ONE };
+        } else {
+            BigInteger[] prev = fibRec2Big(n - 1);
+            return new BigInteger[] { prev[1], prev[1].add(prev[0]) };
+        }
+    }
+
+    // nicer to call, discards the first element (fib(n-1)) of the array
+    public static BigInteger fibRec2BigNicer(int n) {
+        return fibRec2Big(n)[1];
+    }
 }
 
