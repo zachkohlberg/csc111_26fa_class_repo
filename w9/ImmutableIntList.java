@@ -20,6 +20,12 @@ public class ImmutableIntList {
         return new ImmutableIntList(element, this);
     }
 
+    // removing first element is easy
+    // same constraint about not modifying the list
+    public ImmutableIntList removeFirst() {
+        return tail;
+    }
+
     public int get(int index) {
         // base case: element at index 0 is head
         if (index == 0) {
