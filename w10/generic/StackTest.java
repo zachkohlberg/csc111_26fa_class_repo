@@ -14,8 +14,8 @@ public class StackTest {
 
         // add contents to stack
         // we can use any of our stack implementations here
-        IntStack stack = new IntArrayStack(1);
-        // IntStack stack = new IntLinkedStack();
+        // Stack<Integer> stack = new ArrayStack<Integer>(1);
+        Stack<Integer> stack = new LinkedStack<Integer>();
         for (int i = 0; i < numbers.length; i++) {
             stack.push(numbers[i]);
         }

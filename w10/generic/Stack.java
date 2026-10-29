@@ -1,8 +1,8 @@
-public interface IntStack {
-    boolean push(int e);
-    int pop();
+public interface Stack<E> {
+    boolean push(E e);
+    E pop();
     int size();
-    int peek();
+    E peek();
     void clear();
     
     public default boolean isEmpty() {

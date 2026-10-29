@@ -1,25 +1,25 @@
-public class IntLinkedStack implements IntStack {
-    private IntNode top;
+public class LinkedStack<E> implements Stack<E> {
+    private Node<E> top;
     private int size;
 
-    public IntLinkedStack() {
+    public LinkedStack() {
         top = null;
         size = 0;
     }
 
-    public boolean push(int element) {
-        top = new IntNode(element, top);
+    public boolean push(E element) {
+        top = new Node<E>(element, top);
         size += 1;
         return true;
     }
 
-    public int pop() {
+    public E pop() {
         if (size == 0) {
             throw new java.util.EmptyStackException();
         }
 
         size -= 1;
-        int element = top.value;
+        E element = top.value;
         top = top.next; 
         return element;
     }
@@ -28,7 +28,7 @@ public class IntLinkedStack implements IntStack {
         return size;
     }
 
-    public int peek() {
+    public E peek() {
         if (size == 0) {
             throw new java.util.EmptyStackException();
         }
