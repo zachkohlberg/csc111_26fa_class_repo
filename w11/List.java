@@ -3,9 +3,29 @@ public interface List<E> {
     E get(int index);
     E removeAt(int index);
     int size();
-    void add(E element);
-    boolean remove(E element);
     int indexOf(E element);
-    void clear();
-    boolean isEmpty();
+
+    default void clear() {
+        while (!isEmpty()) {
+            removeAt(0);
+        }
+    }
+
+    default boolean remove(E element) {
+        int index = indexOf(element);
+        if (index < 0) {
+            return false;
+        }
+
+        removeAt(index);
+        return true;
+    }
+
+    default void add(E element) {
+        insert(size(), element);
+    }
+
+    default boolean isEmpty() {
+        return size() == 0;
+    }
 }
