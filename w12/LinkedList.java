@@ -78,5 +78,6 @@ public class LinkedList<E> implements List<E> {
         return size;
     }
 
-    // TODO: something to implement for homework
+    // TODO: implement a more efficient version of the default indexOf, remove,
+    // and clear methods we inherited from the interface
 }
